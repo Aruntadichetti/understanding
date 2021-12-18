@@ -1,0 +1,14 @@
+node('build-maven.3.8.4') {
+    stage('git') {
+        git 'https://github.com/Aruntadichetti/java11-examples.git'
+  }
+  stage('build') {
+        sh 'mvn clean package'
+  }
+  stage('archive') {
+        archiveArtifacts artifacts: 'target/*.jar', followSymlinks: false
+  }
+  stage('test') {
+        junit '**/TEST-*xml'
+  }
+}
